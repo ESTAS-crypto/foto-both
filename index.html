@@ -1,499 +1,571 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Photo Booth & Kolase - Resolusi Tinggi & Responsive</title>
-  <style>
-    /* Reset & Base Styling */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #141E30, #243B55);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      min-height: 100vh;
-    }
-    h1 {
-      margin-bottom: 20px;
-      font-size: 2rem;
-      text-align: center;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-    }
-    .container {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-      max-width: 900px;
-      width: 100%;
-    }
-    .video-container {
-      position: relative;
-      margin-bottom: 20px;
-      width: 100%;
-      max-width: 640px;
-    }
-    /* Video responsive: mengambil lebar container */
-    video {
-      width: 100%;
-      height: auto;
-      border: 4px solid #fff;
-      border-radius: 10px;
-      background: #000;
-      transition: transform 0.3s;
-    }
-    video:hover {
-      transform: scale(1.05);
-    }
-    /* Flash overlay */
-    #flash {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #fff;
-      opacity: 0;
-      pointer-events: none;
-    }
-    /* Countdown overlay */
-    #countdown {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 3rem;
-      font-weight: bold;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 10px 20px;
-      border-radius: 10px;
-      display: none;
-    }
-    /* Sembunyikan canvas tangkapan */
-    canvas { 
-      display: none; 
-    }
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    .controls > div {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      flex-wrap: wrap;
-    }
-    .controls select,
-    .controls button,
-    .controls input[type="text"] {
-      padding: 10px 20px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      background: #008cba;
-      color: #fff;
-      transition: background 0.3s, transform 0.2s;
-    }
-    .controls button:hover,
-    .controls select:hover,
-    .controls input[type="text"]:hover {
-      background: #005f73;
-      transform: scale(1.05);
-    }
-    .controls input[type="text"] {
-      outline: none;
-    }
-    .thumbnails {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-    .thumbnails img {
-      width: 160px;
-      height: 90px;
-      object-fit: cover;
-      border: 3px solid #fff;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: transform 0.3s, border-color 0.3s;
-    }
-    .thumbnails img:hover {
-      transform: scale(1.1);
-      border-color: #ff4081;
-    }
-    .collage-section {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    #collageCanvas {
-      border: 4px solid #fff;
-      border-radius: 10px;
-      max-width: 100%;
-      transition: transform 0.3s;
-    }
-    #collageCanvas:hover {
-      transform: scale(1.02);
-    }
-    /* Tombol Clear All */
-    #clearAllBtn {
-      background: #e74c3c;
-    }
-    #clearAllBtn:hover {
-      background: #c0392b;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Photo Booth & Kolase - Ultra HD & Responsive</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #141E30, #243B55);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .video-container {
+            position: relative;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 960px;
+        }
+        
+        video {
+            width: 100%;
+            height: auto;
+            border: 4px solid #fff;
+            border-radius: 10px;
+            background: #000;
+            transition: transform 0.3s;
+        }
+        
+        video:hover {
+            transform: scale(1.05);
+        }
+        
+        #flash {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        #countdown {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        canvas {
+            display: none;
+        }
+        
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .controls>div {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        
+        .controls select,
+        .controls button,
+        .controls input[type="text"] {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #008cba;
+            color: #fff;
+            transition: background 0.3s, transform 0.2s;
+        }
+        
+        .controls button:hover,
+        .controls select:hover,
+        .controls input[type="text"]:hover {
+            background: #005f73;
+            transform: scale(1.05);
+        }
+        
+        .controls input[type="text"] {
+            outline: none;
+        }
+        
+        .thumbnails {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .thumbnails img {
+            width: 240px;
+            height: 135px;
+            object-fit: cover;
+            border: 3px solid #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        
+        .thumbnails img:hover {
+            transform: scale(1.1);
+            border-color: #ff4081;
+        }
+        
+        .collage-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        #collageCanvas {
+            border: 4px solid #fff;
+            border-radius: 10px;
+            max-width: 100%;
+            transition: transform 0.3s;
+        }
+        
+        #collageCanvas:hover {
+            transform: scale(1.02);
+        }
+        
+        #clearAllBtn {
+            background: #e74c3c;
+        }
+        
+        #clearAllBtn:hover {
+            background: #c0392b;
+        }
+    </style>
 </head>
+
 <body>
-  <h1>Photo Booth & Kolase</h1>
-  <div class="container">
-    <!-- Video Live Stream & Flash Effect -->
-    <div class="video-container">
-      <video id="video" autoplay playsinline></video>
-      <div id="flash"></div>
-      <div id="countdown"></div>
+    <h1>Photo Booth & Kolase - Ultra HD</h1>
+    <div class="container">
+        <div class="video-container">
+            <video id="video" autoplay playsinline></video>
+            <div id="flash"></div>
+            <div id="countdown"></div>
+        </div>
+        <canvas id="captureCanvas" width="1920" height="1080"></canvas>
+        <div class="controls">
+            <div>
+                <label for="cameraSelect">Kamera:</label>
+                <select id="cameraSelect">
+                    <option value="">Pilih Kamera</option>
+                </select>
+            </div>
+            <div>
+                <label for="filterSelect">Filter:</label>
+                <select id="filterSelect">
+                    <option value="none">Normal</option>
+                    <option value="grayscale(100%)">Grayscale</option>
+                    <option value="sepia(100%)">Sepia</option>
+                    <option value="invert(100%)">Invert</option>
+                    <option value="hue-rotate(45deg) saturate(150%) brightness(1.2)">Fun</option>
+                    <option value="saturate(200%) contrast(200%) brightness(1.1)">Cartoon</option>
+                    <option value="blur(3px)">Blur</option>
+                    <option value="sepia(60%) contrast(80%) brightness(90%)">Vintage</option>
+                    <option value="brightness(150%) saturate(180%) drop-shadow(0 0 10px #0ff)">Neon</option>
+                    <option value="sepia(100%) contrast(120%) brightness(0.9)">Old Film</option>
+                </select>
+            </div>
+            <div>
+                <label for="timerSelect">Timer:</label>
+                <select id="timerSelect">
+                    <option value="0">0 Detik</option>
+                    <option value="3">3 Detik</option>
+                    <option value="5">5 Detik</option>
+                </select>
+            </div>
+            <div>
+                <label for="collageLayoutSelect">Layout Kolase:</label>
+                <select id="collageLayoutSelect">
+                    <option value="grid">Grid 2x2</option>
+                    <option value="horizontal">Horizontal</option>
+                    <option value="vertical">Vertical</option>
+                    <option value="free">Free Style</option>
+                </select>
+            </div>
+            <div>
+                <button id="captureBtn">Ambil Foto</button>
+            </div>
+            <div>
+                <button id="createCollageBtn" disabled>Buat Kolase</button>
+            </div>
+            <div>
+                <button id="downloadCollageBtn" style="display: none;">Unduh Kolase</button>
+            </div>
+            <div>
+                <button id="clearAllBtn">Clear All</button>
+            </div>
+            <div>
+                <label for="topText">Caption Atas:</label>
+                <input type="text" id="topText" placeholder="Masukkan teks atas" />
+            </div>
+            <div>
+                <label for="bottomText">Caption Bawah:</label>
+                <input type="text" id="bottomText" placeholder="Masukkan teks bawah" />
+            </div>
+        </div>
+        <div class="thumbnails" id="thumbnails">
+            <p>Klik pada thumbnail untuk menghapus foto.</p>
+        </div>
+        <div class="collage-section" id="collageContainer"></div>
+        <audio id="shutterSound" src="https://www.soundjay.com/camera/sounds/camera-shutter-click-03.mp3" preload="auto"></audio>
     </div>
-    <!-- Canvas untuk menangkap foto (hidden) dengan resolusi tinggi -->
-    <canvas id="captureCanvas" width="1280" height="720"></canvas>
-    
-    <!-- Panel Kontrol -->
-    <div class="controls">
-      <div>
-        <label for="filterSelect">Filter:</label>
-        <select id="filterSelect">
-          <option value="none">Normal</option>
-          <option value="grayscale(100%)">Grayscale</option>
-          <option value="sepia(100%)">Sepia</option>
-          <option value="invert(100%)">Invert</option>
-          <option value="hue-rotate(45deg) saturate(150%) brightness(1.2)">Fun</option>
-          <option value="saturate(200%) contrast(200%) brightness(1.1)">Cartoon</option>
-          <option value="blur(3px)">Blur</option>
-          <option value="sepia(60%) contrast(80%) brightness(90%)">Vintage</option>
-          <option value="brightness(150%) saturate(180%) drop-shadow(0 0 10px #0ff)">Neon</option>
-          <option value="sepia(100%) contrast(120%) brightness(0.9)">Old Film</option>
-        </select>
-      </div>
-      <div>
-        <label for="timerSelect">Timer:</label>
-        <select id="timerSelect">
-          <option value="0">0 Detik</option>
-          <option value="3">3 Detik</option>
-          <option value="5">5 Detik</option>
-        </select>
-      </div>
-      <div>
-        <label for="collageLayoutSelect">Layout Kolase:</label>
-        <select id="collageLayoutSelect">
-          <option value="grid">Grid 2x2</option>
-          <option value="horizontal">Horizontal</option>
-          <option value="vertical">Vertical</option>
-          <option value="free">Free Style</option>
-        </select>
-      </div>
-      <div>
-        <button id="captureBtn">Ambil Foto</button>
-      </div>
-      <div>
-        <button id="createCollageBtn" disabled>Buat Kolase</button>
-      </div>
-      <div>
-        <button id="downloadCollageBtn" style="display: none;">Unduh Kolase</button>
-      </div>
-      <div>
-        <button id="clearAllBtn">Clear All</button>
-      </div>
-      <!-- Input Meme Text -->
-      <div>
-        <label for="topText">Caption Atas:</label>
-        <input type="text" id="topText" placeholder="Masukkan teks atas" />
-      </div>
-      <div>
-        <label for="bottomText">Caption Bawah:</label>
-        <input type="text" id="bottomText" placeholder="Masukkan teks bawah" />
-      </div>
-    </div>
-    
-    <!-- Tampilan Thumbnail Foto (klik untuk hapus) -->
-    <div class="thumbnails" id="thumbnails">
-      <p>Klik pada thumbnail untuk menghapus foto.</p>
-    </div>
-    
-    <!-- Tampilan Kolase -->
-    <div class="collage-section" id="collageContainer"></div>
-    
-    <!-- Audio Shutter (sumber bebas) -->
-    <audio id="shutterSound" src="https://www.soundjay.com/camera/sounds/camera-shutter-click-03.mp3" preload="auto"></audio>
-  </div>
 
-  <script>
-    // Ambil elemen DOM
-    const video = document.getElementById('video');
-    const captureCanvas = document.getElementById('captureCanvas');
-    const captureCtx = captureCanvas.getContext('2d');
-    const filterSelect = document.getElementById('filterSelect');
-    const timerSelect = document.getElementById('timerSelect');
-    const collageLayoutSelect = document.getElementById('collageLayoutSelect');
-    const captureBtn = document.getElementById('captureBtn');
-    const createCollageBtn = document.getElementById('createCollageBtn');
-    const downloadCollageBtn = document.getElementById('downloadCollageBtn');
-    const clearAllBtn = document.getElementById('clearAllBtn');
-    const thumbnails = document.getElementById('thumbnails');
-    const collageContainer = document.getElementById('collageContainer');
-    const flashOverlay = document.getElementById('flash');
-    const countdownOverlay = document.getElementById('countdown');
-    const shutterSound = document.getElementById('shutterSound');
-    const topTextInput = document.getElementById('topText');
-    const bottomTextInput = document.getElementById('bottomText');
+    <script>
+        const video = document.getElementById('video');
+        const captureCanvas = document.getElementById('captureCanvas');
+        const captureCtx = captureCanvas.getContext('2d');
+        const filterSelect = document.getElementById('filterSelect');
+        const timerSelect = document.getElementById('timerSelect');
+        const collageLayoutSelect = document.getElementById('collageLayoutSelect');
+        const captureBtn = document.getElementById('captureBtn');
+        const createCollageBtn = document.getElementById('createCollageBtn');
+        const downloadCollageBtn = document.getElementById('downloadCollageBtn');
+        const clearAllBtn = document.getElementById('clearAllBtn');
+        const thumbnails = document.getElementById('thumbnails');
+        const collageContainer = document.getElementById('collageContainer');
+        const flashOverlay = document.getElementById('flash');
+        const countdownOverlay = document.getElementById('countdown');
+        const shutterSound = document.getElementById('shutterSound');
+        const topTextInput = document.getElementById('topText');
+        const bottomTextInput = document.getElementById('bottomText');
+        const cameraSelect = document.getElementById('cameraSelect');
 
-    // Array untuk menyimpan foto (data URL)
-    let capturedImages = [];
+        let capturedImages = [];
+        let currentStream = null;
 
-    // Akses kamera dengan resolusi ideal 1280x720
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ 
-        video: { width: { ideal: 1280 }, height: { ideal: 720 } } 
-      })
-      .then(stream => {
-        video.srcObject = stream;
-        video.play();
-      })
-      .catch(err => {
-        console.error("Tidak dapat mengakses kamera:", err);
-        alert("Gagal mengakses kamera.");
-      });
-    } else {
-      alert("Browser Anda tidak mendukung getUserMedia API.");
-    }
+        function stopCurrentStream() {
+            if (currentStream) {
+                currentStream.getTracks().forEach(track => track.stop());
+            }
+        }
 
-    // Update filter pada video
-    filterSelect.addEventListener('change', () => {
-      video.style.filter = filterSelect.value;
-    });
+        async function populateCameraSelect() {
+            try {
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const videoDevices = devices.filter(device => device.kind === 'videoinput');
+                cameraSelect.innerHTML = '';
+                if (videoDevices.length === 0) {
+                    alert("Tidak ada kamera yang terdeteksi. Pastikan kamera Anda terhubung dan izinkan akses kamera.");
+                }
+                videoDevices.forEach(device => {
+                    const option = document.createElement('option');
+                    option.value = device.deviceId;
+                    option.text = device.label || `Kamera ${cameraSelect.length + 1}`;
+                    cameraSelect.appendChild(option);
+                });
+            } catch (err) {
+                console.error("Gagal mengenumerasi perangkat:", err);
+                alert("Gagal mendeteksi kamera. Silakan periksa koneksi dan izin kamera.");
+            }
+        }
 
-    // Fungsi countdown sebelum foto diambil
-    function showCountdown(seconds) {
-      return new Promise(resolve => {
-        countdownOverlay.style.display = 'block';
-        let counter = seconds;
-        countdownOverlay.textContent = counter;
-        const interval = setInterval(() => {
-          counter--;
-          if (counter > 0) {
-            countdownOverlay.textContent = counter;
-          } else {
-            clearInterval(interval);
-            countdownOverlay.style.display = 'none';
-            resolve();
-          }
-        }, 1000);
-      });
-    }
+        async function accessCamera() {
+            stopCurrentStream();
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        width: {
+                            ideal: 3840
+                        },
+                        height: {
+                            ideal: 2160
+                        }
+                    }
+                });
+                currentStream = stream;
+                video.srcObject = stream;
+                video.play();
+                await populateCameraSelect();
+                const currentDeviceId = stream.getVideoTracks()[0].getSettings().deviceId;
+                cameraSelect.value = currentDeviceId;
+            } catch (err) {
+                console.error("Tidak dapat mengakses kamera:", err);
+                alert("Gagal mengakses kamera. Pastikan Anda telah memberikan izin kamera di browser.");
+            }
+        }
 
-    // Fungsi efek flash
-    function triggerFlash() {
-      flashOverlay.style.transition = 'none';
-      flashOverlay.style.opacity = '1';
-      setTimeout(() => {
-        flashOverlay.style.transition = 'opacity 0.5s ease-out';
-        flashOverlay.style.opacity = '0';
-      }, 50);
-    }
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            alert("Browser Anda tidak mendukung getUserMedia API. Silakan gunakan browser modern seperti Chrome atau Firefox.");
+        } else {
+            accessCamera();
+        }
 
-    // Perbarui tampilan thumbnail
-    function updateThumbnails() {
-      thumbnails.innerHTML = '';
-      capturedImages.forEach((imgData, index) => {
-        const img = document.createElement('img');
-        img.src = imgData;
-        img.alt = `Foto ${index + 1}`;
-        // Klik thumbnail untuk menghapus foto
-        img.addEventListener('click', () => {
-          if (confirm("Hapus foto ini?")) {
-            capturedImages.splice(index, 1);
+        cameraSelect.addEventListener('change', async() => {
+            const selectedDeviceId = cameraSelect.value;
+            stopCurrentStream();
+            if (capturedImages.length > 0) {
+                if (confirm("Mengganti kamera akan menghapus foto yang telah diambil. Lanjutkan?")) {
+                    capturedImages = [];
+                    updateThumbnails();
+                    createCollageBtn.disabled = true;
+                } else {
+                    cameraSelect.value = currentStream.getVideoTracks()[0].getSettings().deviceId;
+                    return;
+                }
+            }
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        deviceId: {
+                            exact: selectedDeviceId
+                        },
+                        width: {
+                            ideal: 3840
+                        },
+                        height: {
+                            ideal: 2160
+                        }
+                    }
+                });
+                currentStream = stream;
+                video.srcObject = stream;
+                video.play();
+            } catch (err) {
+                console.error("Gagal mengganti kamera:", err);
+                alert("Gagal mengganti kamera. Pastikan kamera terdeteksi dan izin diberikan.");
+            }
+        });
+
+        filterSelect.addEventListener('change', () => {
+            video.style.filter = filterSelect.value;
+        });
+
+        function showCountdown(seconds) {
+            return new Promise(resolve => {
+                countdownOverlay.style.display = 'block';
+                let counter = seconds;
+                countdownOverlay.textContent = counter;
+                const interval = setInterval(() => {
+                    counter--;
+                    if (counter > 0) {
+                        countdownOverlay.textContent = counter;
+                    } else {
+                        clearInterval(interval);
+                        countdownOverlay.style.display = 'none';
+                        resolve();
+                    }
+                }, 1000);
+            });
+        }
+
+        function triggerFlash() {
+            flashOverlay.style.transition = 'none';
+            flashOverlay.style.opacity = '1';
+            setTimeout(() => {
+                flashOverlay.style.transition = 'opacity 0.5s ease-out';
+                flashOverlay.style.opacity = '0';
+            }, 50);
+        }
+
+        function updateThumbnails() {
+            thumbnails.innerHTML = '';
+            capturedImages.forEach((imgData, index) => {
+                const img = document.createElement('img');
+                img.src = imgData;
+                img.alt = `Foto ${index + 1}`;
+                img.addEventListener('click', () => {
+                    if (confirm("Hapus foto ini?")) {
+                        capturedImages.splice(index, 1);
+                        updateThumbnails();
+                        createCollageBtn.disabled = capturedImages.length === 0;
+                    }
+                });
+                thumbnails.appendChild(img);
+            });
+            if (capturedImages.length === 0) {
+                thumbnails.innerHTML = '<p>Klik pada thumbnail untuk menghapus foto.</p>';
+            }
+        }
+
+        async function capturePhoto() {
+            const delay = parseInt(timerSelect.value, 10);
+            if (delay > 0) await showCountdown(delay);
+            captureCtx.filter = filterSelect.value;
+            captureCtx.drawImage(video, 0, 0, captureCanvas.width, captureCanvas.height);
+            const imageDataURL = captureCanvas.toDataURL('image/png');
+            shutterSound.currentTime = 0;
+            shutterSound.play();
+            triggerFlash();
+            capturedImages.push(imageDataURL);
             updateThumbnails();
             createCollageBtn.disabled = capturedImages.length === 0;
-          }
-        });
-        thumbnails.appendChild(img);
-      });
-      if (capturedImages.length === 0) {
-        thumbnails.innerHTML = '<p>Klik pada thumbnail untuk menghapus foto.</p>';
-      }
-    }
-
-    // Fungsi menangkap foto (menggunakan delay jika timer > 0)
-    async function capturePhoto() {
-      const delay = parseInt(timerSelect.value, 10);
-      if (delay > 0) await showCountdown(delay);
-      // Terapkan filter pada canvas
-      captureCtx.filter = filterSelect.value;
-      captureCtx.drawImage(video, 0, 0, captureCanvas.width, captureCanvas.height);
-      const imageDataURL = captureCanvas.toDataURL('image/png');
-
-      // Mainkan suara shutter dan efek flash
-      shutterSound.currentTime = 0;
-      shutterSound.play();
-      triggerFlash();
-
-      capturedImages.push(imageDataURL);
-      updateThumbnails();
-      createCollageBtn.disabled = capturedImages.length === 0;
-    }
-
-    captureBtn.addEventListener('click', () => {
-      if (capturedImages.length >= 4) {
-        alert("Maksimal 4 foto telah diambil.");
-        return;
-      }
-      capturePhoto();
-    });
-
-    clearAllBtn.addEventListener('click', () => {
-      if (confirm("Hapus semua foto?")) {
-        capturedImages = [];
-        updateThumbnails();
-        collageContainer.innerHTML = '';
-        downloadCollageBtn.style.display = 'none';
-        createCollageBtn.disabled = true;
-      }
-    });
-
-    // Fungsi membuat kolase berdasarkan layout yang dipilih
-    createCollageBtn.addEventListener('click', () => {
-      const layoutType = collageLayoutSelect.value;
-      let collageCanvas = document.createElement('canvas');
-      collageCanvas.id = "collageCanvas";
-      const ctx = collageCanvas.getContext('2d');
-      const numImages = capturedImages.length;
-      let collageWidth, collageHeight;
-
-      if (layoutType === 'grid') {
-        // Grid 2x2: Set ukuran canvas 1280x720, tiap foto 640x360
-        collageWidth = 1280;
-        collageHeight = 720;
-        collageCanvas.width = collageWidth;
-        collageCanvas.height = collageHeight;
-        ctx.fillStyle = "#000";
-        ctx.fillRect(0, 0, collageWidth, collageHeight);
-        capturedImages.forEach((imgData, index) => {
-          const img = new Image();
-          img.onload = () => {
-            const x = (index % 2) * 640;
-            const y = Math.floor(index / 2) * 360;
-            ctx.drawImage(img, x, y, 640, 360);
-          };
-          img.src = imgData;
-        });
-      } else if (layoutType === 'horizontal') {
-        // Horizontal: canvas 1280*numImages x 720, tiap foto 1280x720
-        collageWidth = 1280 * numImages;
-        collageHeight = 720;
-        collageCanvas.width = collageWidth;
-        collageCanvas.height = collageHeight;
-        ctx.fillStyle = "#000";
-        ctx.fillRect(0, 0, collageWidth, collageHeight);
-        capturedImages.forEach((imgData, index) => {
-          const img = new Image();
-          img.onload = () => {
-            const x = index * 1280;
-            ctx.drawImage(img, x, 0, 1280, 720);
-          };
-          img.src = imgData;
-        });
-      } else if (layoutType === 'vertical') {
-        // Vertikal: canvas 1280 x 720*numImages, tiap foto 1280x720
-        collageWidth = 1280;
-        collageHeight = 720 * numImages;
-        collageCanvas.width = collageWidth;
-        collageCanvas.height = collageHeight;
-        ctx.fillStyle = "#000";
-        ctx.fillRect(0, 0, collageWidth, collageHeight);
-        capturedImages.forEach((imgData, index) => {
-          const img = new Image();
-          img.onload = () => {
-            const y = index * 720;
-            ctx.drawImage(img, 0, y, 1280, 720);
-          };
-          img.src = imgData;
-        });
-      } else if (layoutType === 'free') {
-        // Free Style: canvas 1280x720, foto ditampilkan secara acak dengan rotasi & bayangan
-        collageWidth = 1280;
-        collageHeight = 720;
-        collageCanvas.width = collageWidth;
-        collageCanvas.height = collageHeight;
-        // Background gradient
-        const gradient = ctx.createLinearGradient(0, 0, collageWidth, collageHeight);
-        gradient.addColorStop(0, "#ff9a9e");
-        gradient.addColorStop(1, "#fad0c4");
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, collageWidth, collageHeight);
-        capturedImages.forEach((imgData) => {
-          const img = new Image();
-          img.onload = () => {
-            const imgWidth = 320; // ukuran lebih kecil untuk efek free style
-            const imgHeight = 180;
-            const x = Math.random() * (collageWidth - imgWidth);
-            const y = Math.random() * (collageHeight - imgHeight);
-            const angle = (Math.random() * 30 - 15) * Math.PI / 180;
-            ctx.save();
-            ctx.translate(x + imgWidth / 2, y + imgHeight / 2);
-            ctx.rotate(angle);
-            ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
-            ctx.shadowBlur = 10;
-            ctx.drawImage(img, -imgWidth / 2, -imgHeight / 2, imgWidth, imgHeight);
-            ctx.restore();
-          };
-          img.src = imgData;
-        });
-      }
-
-      // Tambahkan teks meme (jika ada)
-      setTimeout(() => {
-        const topText = topTextInput.value.trim();
-        const bottomText = bottomTextInput.value.trim();
-        ctx.font = "bold 60px Impact";
-        ctx.textAlign = "center";
-        ctx.fillStyle = "white";
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 4;
-        if (topText) {
-          ctx.strokeText(topText.toUpperCase(), collageWidth / 2, 70);
-          ctx.fillText(topText.toUpperCase(), collageWidth / 2, 70);
         }
-        if (bottomText) {
-          ctx.strokeText(bottomText.toUpperCase(), collageWidth / 2, collageHeight - 20);
-          ctx.fillText(bottomText.toUpperCase(), collageWidth / 2, collageHeight - 20);
-        }
-      }, 500);
 
-      // Tampilkan kolase
-      collageContainer.innerHTML = '';
-      collageContainer.appendChild(collageCanvas);
-      downloadCollageBtn.style.display = 'inline-block';
+        captureBtn.addEventListener('click', () => {
+            if (capturedImages.length >= 4) {
+                alert("Maksimal 4 foto telah diambil.");
+                return;
+            }
+            capturePhoto();
+        });
 
-      downloadCollageBtn.onclick = () => {
-        const link = document.createElement('a');
-        link.href = collageCanvas.toDataURL('image/png');
-        link.download = 'kolase.png';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      };
-    });
-  </script>
+        clearAllBtn.addEventListener('click', () => {
+            if (confirm("Hapus semua foto?")) {
+                capturedImages = [];
+                updateThumbnails();
+                collageContainer.innerHTML = '';
+                downloadCollageBtn.style.display = 'none';
+                createCollageBtn.disabled = true;
+            }
+        });
+
+        createCollageBtn.addEventListener('click', () => {
+            const layoutType = collageLayoutSelect.value;
+            let collageCanvas = document.createElement('canvas');
+            collageCanvas.id = "collageCanvas";
+            const ctx = collageCanvas.getContext('2d');
+            const numImages = capturedImages.length;
+            let collageWidth, collageHeight;
+
+            if (layoutType === 'grid') {
+                collageWidth = 1920;
+                collageHeight = 1080;
+                collageCanvas.width = collageWidth;
+                collageCanvas.height = collageHeight;
+                ctx.fillStyle = "#000";
+                ctx.fillRect(0, 0, collageWidth, collageHeight);
+                capturedImages.forEach((imgData, index) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const x = (index % 2) * 960;
+                        const y = Math.floor(index / 2) * 540;
+                        ctx.drawImage(img, x, y, 960, 540);
+                    };
+                    img.src = imgData;
+                });
+            } else if (layoutType === 'horizontal') {
+                collageWidth = 1920 * numImages;
+                collageHeight = 1080;
+                collageCanvas.width = collageWidth;
+                collageCanvas.height = collageHeight;
+                ctx.fillStyle = "#000";
+                ctx.fillRect(0, 0, collageWidth, collageHeight);
+                capturedImages.forEach((imgData, index) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const x = index * 1920;
+                        ctx.drawImage(img, x, 0, 1920, 1080);
+                    };
+                    img.src = imgData;
+                });
+            } else if (layoutType === 'vertical') {
+                collageWidth = 1920;
+                collageHeight = 1080 * numImages;
+                collageCanvas.width = collageWidth;
+                collageCanvas.height = collageHeight;
+                ctx.fillStyle = "#000";
+                ctx.fillRect(0, 0, collageWidth, collageHeight);
+                capturedImages.forEach((imgData, index) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const y = index * 1080;
+                        ctx.drawImage(img, 0, y, 1920, 1080);
+                    };
+                    img.src = imgData;
+                });
+            } else if (layoutType === 'free') {
+                collageWidth = 1920;
+                collageHeight = 1080;
+                collageCanvas.width = collageWidth;
+                collageCanvas.height = collageHeight;
+                const gradient = ctx.createLinearGradient(0, 0, collageWidth, collageHeight);
+                gradient.addColorStop(0, "#ff9a9e");
+                gradient.addColorStop(1, "#fad0c4");
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, collageWidth, collageHeight);
+                capturedImages.forEach((imgData) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const imgWidth = 480;
+                        const imgHeight = 270;
+                        const x = Math.random() * (collageWidth - imgWidth);
+                        const y = Math.random() * (collageHeight - imgHeight);
+                        const angle = (Math.random() * 30 - 15) * Math.PI / 180;
+                        ctx.save();
+                        ctx.translate(x + imgWidth / 2, y + imgHeight / 2);
+                        ctx.rotate(angle);
+                        ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+                        ctx.shadowBlur = 10;
+                        ctx.drawImage(img, -imgWidth / 2, -imgHeight / 2, imgWidth, imgHeight);
+                        ctx.restore();
+                    };
+                    img.src = imgData;
+                });
+            }
+
+            setTimeout(() => {
+                const topText = topTextInput.value.trim();
+                const bottomText = bottomTextInput.value.trim();
+                ctx.font = "bold 60px Impact";
+                ctx.textAlign = "center";
+                ctx.fillStyle = "white";
+                ctx.strokeStyle = "black";
+                ctx.lineWidth = 4;
+                if (topText) {
+                    ctx.strokeText(topText.toUpperCase(), collageWidth / 2, 70);
+                    ctx.fillText(topText.toUpperCase(), collageWidth / 2, 70);
+                }
+                if (bottomText) {
+                    ctx.strokeText(bottomText.toUpperCase(), collageWidth / 2, collageHeight - 20);
+                    ctx.fillText(bottomText.toUpperCase(), collageWidth / 2, collageHeight - 20);
+                }
+            }, 500);
+
+            collageContainer.innerHTML = '';
+            collageContainer.appendChild(collageCanvas);
+            downloadCollageBtn.style.display = 'inline-block';
+
+            downloadCollageBtn.onclick = () => {
+                const link = document.createElement('a');
+                link.href = collageCanvas.toDataURL('image/png');
+                link.download = 'kolase.png';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+        });
+    </script>
 </body>
+
 </html>
